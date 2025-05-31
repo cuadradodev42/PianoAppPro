@@ -7,12 +7,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Checkbox } from "@/components/ui/checkbox"
 import { Users, Wifi, Eye, Piano, Sparkles } from "lucide-react"
 import { useRouter } from "next/navigation"
+import ConnectionDiagnostic from "@/components/connection-diagnostic"
 
 export default function HomePage() {
   const [roomCode, setRoomCode] = useState("")
   const [playerName, setPlayerName] = useState("")
   const [isCreating, setIsCreating] = useState(false)
   const [joinAsSpectator, setJoinAsSpectator] = useState(false)
+  const [showDiagnostic, setShowDiagnostic] = useState(false)
   const router = useRouter()
 
   const createRoom = async () => {
@@ -168,6 +170,18 @@ export default function HomePage() {
             </div>
           </div>
           <p className="text-xs text-gray-400 mt-2">Comparte el código de sala con tus amigos para que se unan</p>
+
+          <div className="mt-4 pt-2 border-t border-gray-200">
+            <Button variant="ghost" size="sm" onClick={() => setShowDiagnostic(!showDiagnostic)} className="text-xs">
+              {showDiagnostic ? "Ocultar diagnóstico" : "Mostrar diagnóstico de conexión"}
+            </Button>
+          </div>
+
+          {showDiagnostic && (
+            <div className="mt-4">
+              <ConnectionDiagnostic />
+            </div>
+          )}
         </div>
       </div>
     </div>

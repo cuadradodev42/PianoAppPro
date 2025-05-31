@@ -20,7 +20,7 @@ export function useWebSocket(roomId: string, playerName: string, asSpectator: bo
   const socketRef = useRef<any>(null)
   const hasJoinedRoom = useRef(false)
   const reconnectAttempts = useRef(0)
-  const maxReconnectAttempts = 3
+  const maxReconnectAttempts = 5
   const isConnecting = useRef(false)
 
   // Memoizar los hooks para evitar recreaciones
@@ -114,6 +114,10 @@ export function useWebSocket(roomId: string, playerName: string, asSpectator: bo
     console.log(`🔌 Connecting to backend server for room ${roomId}...`)
     setError("Conectando...")
 
+    // Obtener la URL del backend desde las variables de entorno
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pianopartybackend.onrender.com"
+    console.log(`🔌 Using backend URL: ${backendUrl}`)
+
     // Importar socket.io-client dinámicamente
     import("socket.io-client")
       .then(({ io }) => {
@@ -123,14 +127,14 @@ export function useWebSocket(roomId: string, playerName: string, asSpectator: bo
           return
         }
 
-        const socket = io("http://localhost:3001", {
+        const socket = io(backendUrl, {
           transports: ["websocket", "polling"],
-          timeout: 5000,
+          timeout: 10000,
           forceNew: true,
           reconnection: true,
           reconnectionDelay: 1000,
           reconnectionDelayMax: 5000,
-          reconnectionAttempts: 3,
+          reconnectionAttempts: 5,
           autoConnect: true,
         })
 
@@ -139,11 +143,11 @@ export function useWebSocket(roomId: string, playerName: string, asSpectator: bo
         // Timeout para detectar problemas
         const connectionTimeout = setTimeout(() => {
           if (!socket.connected) {
-            setError("Backend no disponible. ¿Está ejecutándose en puerto 3001?")
+            setError(`Backend no disponible en ${backendUrl}. Intentando reconectar...`)
             console.error("❌ Connection timeout - backend not responding")
             isConnecting.current = false
           }
-        }, 5000)
+        }, 10000)
 
         socket.on("connect", () => {
           console.log("✅ Connected to backend server with ID:", socket.id)
@@ -178,7 +182,7 @@ export function useWebSocket(roomId: string, playerName: string, asSpectator: bo
           isConnecting.current = false
 
           if (reconnectAttempts.current >= maxReconnectAttempts) {
-            setError("No se puede conectar al backend. Verifica que esté ejecutándose.")
+            setError(`No se puede conectar a ${backendUrl}. Verifica que el backend esté ejecutándose.`)
           } else {
             setError(`Reconectando (${reconnectAttempts.current}/${maxReconnectAttempts})...`)
           }
@@ -243,4 +247,3 @@ export function useWebSocket(roomId: string, playerName: string, asSpectator: bo
     error,
   }
 }
-

@@ -212,7 +212,7 @@ MIT License - ver archivo LICENSE para detalles
 
 ## 🎵 ¡Disfruta tocando música con tus amigos!
 
---
+---
 
 **Desarrollado con ❤️ para la comunidad musical**
 \`\`\`

@@ -1,16 +1,17 @@
 {
-  "name": "piano-multiplayer-backend",
+  "name": "piano-party-backend",
   "version": "1.0.0",
-  "description": "Backend server for Piano Multiplayer App",
-  "main": "server.js",
+  "description": "Backend for Piano Party multiplayer app",
+  "main": "render-server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node render-server.js",
+    "dev": "node render-server.js"
   },
   "dependencies": {
     "socket.io": "^4.7.2"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
+
