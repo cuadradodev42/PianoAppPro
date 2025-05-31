@@ -307,7 +307,7 @@ const httpServer = createServer()
 // Configurar Socket.IO con configuración más agresiva
 const io = new SocketIOServer(httpServer, {
   cors: {
-    origin: ["http://localhost:3000", "https://piano-party.vercel.app"],
+    origin: ["http://localhost:3000", "https://pianoparty2.vercel.app"],
     methods: ["GET", "POST"],
     credentials: true,
   },
