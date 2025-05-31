@@ -1,0 +1,21 @@
+{
+  "name": "Piano Party - Multiplayer Piano App",
+  "short_name": "Piano Party",
+  "description": "Play piano together in real-time with friends",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#8b5cf6",
+  "theme_color": "#8b5cf6",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
