@@ -39,9 +39,9 @@ const nextConfig = {
 
     return config
   },
-  // Variables de entorno para producción
-  env: {
-    NEXT_PUBLIC_BACKEND_URL: "https://pianopartybackend.onrender.com",
+  // Configuración experimental para App Router
+  experimental: {
+    appDir: true,
   },
 }
 
