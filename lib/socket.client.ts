@@ -4,7 +4,7 @@ let socket: Socket | null = null
 
 export function getSocket(): Socket {
   if (!socket) {
-    socket = io(process.env.NODE_ENV === "production" ? "" : "http://localhost:3000", {
+    socket = io(process.env.NODE_ENV === "production" ? "https://pianoapppro.onrender.com" : "http://localhost:3000", {
       transports: ["websocket", "polling"],
       timeout: 20000,
       reconnection: true,

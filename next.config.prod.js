@@ -24,7 +24,7 @@ const nextConfig = {
   },
   // Variables de entorno para producción
   env: {
-    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || "https://tu-backend.railway.app",
+    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || "https://pianoapppro.onrender.com",
   },
 }
 

@@ -5,11 +5,11 @@ const { SCALES } = require("./constants")
 const PORT = process.env.PORT || 3001
 
 // Configurar CORS para producción
-const corsOrigins = [
-  "https://tu-app.vercel.app", // Reemplazar con tu dominio de Vercel
-  "http://localhost:3000", // Para desarrollo local
-  /\.vercel\.app$/, // Permitir todas las URLs de preview de Vercel
-]
+const corsOrigins = require('cors');
+app.use(cors({
+  origin: 'https://piano-app-pro.vercel.app',
+  credentials: true
+}));
 
 class RoomManager {
   constructor() {
