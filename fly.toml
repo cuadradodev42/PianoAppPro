@@ -1,0 +1,67 @@
+[app]
+name = "piano-app-pro"
+primary_region = "fra"  # Frankfurt - buena ubicación para balanceo de carga global
+
+[builds]
+  # Frontend (Next.js)
+  [[builds]]
+    dockerfile = "Dockerfile"
+    image = "flyio/piano-app-frontend"
+    target = "frontend"
+    
+  # Backend (Node.js)
+  [[builds]]
+    dockerfile = "Dockerfile"
+    image = "flyio/piano-app-backend"
+    target = "backend"
+
+[http_service]
+  internal_port = 3000  # Puerto para Next.js
+  force_https = true
+  
+  [http_service.ports]
+    port = 80
+    handlers = ["http"]
+
+  [http_service.tls]
+    auto = true
+
+[http_service.ports]
+  # Puerto para el backend
+  [[http_service.ports]]
+    port = 3001
+    handlers = ["http"]
+
+[http_service.tls]
+  auto = true
+
+[http_service.websocket]
+  enabled = true
+  # Configuración específica para WebSocket
+  [http_service.websocket.idle_timeout]
+    soft = "10m"
+    hard = "15m"
+
+[env]
+  # Variables de entorno
+  NODE_ENV = "production"
+  NEXT_PUBLIC_API_URL = "http://localhost:3001"  # Se modificará en producción
+
+[secrets]
+  # Para producción
+  NEXT_PUBLIC_API_URL = ""
+
+[deploy]
+  # Regiones de despliegue
+  regions = ["fra", "sin", "nrt"]  # Frankfurt, Singapur, Tokio
+  
+  # Escalado automático
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines = 1
+  max_machines = 3
+
+[assets]
+  # Configuración de assets para Next.js
+  ignore = [".next/**/*"]
+  include = ["public/**/*"]
